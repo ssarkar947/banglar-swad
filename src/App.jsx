@@ -268,52 +268,52 @@ function App() {
     localStorage.setItem('bs_payment_config', JSON.stringify(paymentConfig));
   }, [paymentConfig]);
 
-  const handleAddProduct = useCallback(async (newProd) => {
-    await dbService.addProduct(newProd);
+  const handleAddProduct = useCallback(async (newProd, forceLocal = false) => {
+    if (!forceLocal) await dbService.addProduct(newProd);
     setProducts(prev => [newProd, ...prev]);
   }, []);
 
-  const handleUpdateProduct = useCallback(async (updatedProd) => {
-    await dbService.updateProduct(updatedProd);
+  const handleUpdateProduct = useCallback(async (updatedProd, forceLocal = false) => {
+    if (!forceLocal) await dbService.updateProduct(updatedProd);
     setProducts(prev => prev.map(p => p.id === updatedProd.id ? updatedProd : p));
   }, []);
 
-  const handleDeleteProduct = useCallback(async (id) => {
-    await dbService.deleteProduct(id);
+  const handleDeleteProduct = useCallback(async (id, forceLocal = false) => {
+    if (!forceLocal) await dbService.deleteProduct(id);
     setProducts(prev => prev.filter(p => p.id !== id));
   }, []);
 
-  const handleUpdateOrderStatus = useCallback(async (id, status) => {
-    await dbService.updateOrderStatus(id, status);
+  const handleUpdateOrderStatus = useCallback(async (id, status, forceLocal = false) => {
+    if (!forceLocal) await dbService.updateOrderStatus(id, status);
     setOrders(prev => prev.map(o => o.id === id ? { ...o, status } : o));
   }, []);
 
-  const handleAddCoupon = useCallback(async (coupon) => {
-    await dbService.addCoupon(coupon);
+  const handleAddCoupon = useCallback(async (coupon, forceLocal = false) => {
+    if (!forceLocal) await dbService.addCoupon(coupon);
     setCoupons(prev => [coupon, ...prev]);
   }, []);
 
-  const handleToggleCoupon = useCallback(async (code) => {
+  const handleToggleCoupon = useCallback(async (code, forceLocal = false) => {
     const target = coupons.find(c => c.code === code);
     if (target) {
       const newActive = !target.active;
-      await dbService.toggleCoupon(code, newActive);
+      if (!forceLocal) await dbService.toggleCoupon(code, newActive);
       setCoupons(prev => prev.map(c => c.code === code ? { ...c, active: newActive } : c));
     }
   }, [coupons]);
 
-  const handleAddBlog = useCallback(async (blog) => {
-    await dbService.addBlog(blog);
+  const handleAddBlog = useCallback(async (blog, forceLocal = false) => {
+    if (!forceLocal) await dbService.addBlog(blog);
     setBlogs(prev => [blog, ...prev]);
   }, []);
 
-  const handleDeleteBlog = useCallback(async (id) => {
-    await dbService.deleteBlog(id);
+  const handleDeleteBlog = useCallback(async (id, forceLocal = false) => {
+    if (!forceLocal) await dbService.deleteBlog(id);
     setBlogs(prev => prev.filter(b => b.id !== id));
   }, []);
 
-  const handleUpdatePaymentConfig = useCallback(async (config) => {
-    await dbService.updatePaymentConfig(config);
+  const handleUpdatePaymentConfig = useCallback(async (config, forceLocal = false) => {
+    if (!forceLocal) await dbService.updatePaymentConfig(config);
     setPaymentConfig(config);
   }, []);
 

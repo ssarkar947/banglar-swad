@@ -21,6 +21,8 @@ export default function AdminDashboard({
 }) {
   const [activeTab, setActiveTab] = useState('overview');
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dbError, setDbError] = useState(null);
 
   /* ── Form States ── */
   const [newProduct, setNewProduct] = useState({
@@ -94,7 +96,7 @@ export default function AdminDashboard({
   }, [orders, coupons, products]);
 
   /* ── Form Submissions ── */
-  const handleProductSubmit = (e) => {
+  const handleProductSubmit = async (e) => {
     e.preventDefault();
     if (!newProduct.name || !newProduct.price) return;
     
@@ -116,46 +118,73 @@ export default function AdminDashboard({
       backImage: newProduct.backImage || '',
     };
 
-    onAddProduct(productData);
-    setNewProduct({
-      name: '',
-      bengaliName: '',
-      price: '',
-      weight: '',
-      story: '',
-      description: '',
-      ingredientsInput: '',
-      image: '/images/panch-phoron.png',
-      imageSelect: '/images/panch-phoron.png',
-      backImage: '',
-    });
-    alert('Spice SKU added successfully!');
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onAddProduct(productData);
+      setNewProduct({
+        name: '',
+        bengaliName: '',
+        price: '',
+        weight: '',
+        story: '',
+        description: '',
+        ingredientsInput: '',
+        image: '/images/panch-phoron.png',
+        imageSelect: '/images/panch-phoron.png',
+        backImage: '',
+      });
+      alert('Spice SKU added successfully!');
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'add_product',
+        data: productData
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleCouponSubmit = (e) => {
+  const handleCouponSubmit = async (e) => {
     e.preventDefault();
     if (!newCoupon.code || !newCoupon.value) return;
 
-    onAddCoupon({
+    const couponData = {
       code: newCoupon.code.toUpperCase().replace(/\s+/g, ''),
       type: newCoupon.type,
       value: parseFloat(newCoupon.value),
       active: true,
-    });
+    };
 
-    setNewCoupon({
-      code: '',
-      type: 'percentage',
-      value: '',
-    });
-    alert('Coupon code activated!');
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onAddCoupon(couponData);
+      setNewCoupon({
+        code: '',
+        type: 'percentage',
+        value: '',
+      });
+      alert('Coupon code activated!');
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'add_coupon',
+        data: couponData
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleBlogSubmit = (e) => {
+  const handleBlogSubmit = async (e) => {
     e.preventDefault();
     if (!newBlog.title || !newBlog.content) return;
 
-    onAddBlog({
+    const blogData = {
       id: newBlog.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       title: newBlog.title,
       titleBn: newBlog.titleBn,
@@ -164,26 +193,40 @@ export default function AdminDashboard({
       content: newBlog.content,
       readTime: newBlog.readTime,
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    });
+    };
 
-    setNewBlog({
-      title: '',
-      titleBn: '',
-      author: '',
-      pillar: 'Memory',
-      content: '',
-      readTime: '3 min read',
-    });
-    alert('Kitchen Story published!');
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onAddBlog(blogData);
+      setNewBlog({
+        title: '',
+        titleBn: '',
+        author: '',
+        pillar: 'Memory',
+        content: '',
+        readTime: '3 min read',
+      });
+      alert('Kitchen Story published!');
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'add_blog',
+        data: blogData
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleQuickDraftSubmit = (e) => {
+  const handleQuickDraftSubmit = async (e) => {
     e.preventDefault();
     const title = e.target.elements.draftTitle.value;
     const content = e.target.elements.draftContent.value;
     if (!title || !content) return;
 
-    onAddBlog({
+    const blogData = {
       id: title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       title: title,
       titleBn: '',
@@ -192,31 +235,194 @@ export default function AdminDashboard({
       content: content,
       readTime: '3 min read',
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-    });
-    
-    e.target.reset();
-    alert('Quick Draft published directly to Stories!');
+    };
+
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onAddBlog(blogData);
+      e.target.reset();
+      alert('Quick Draft published directly to Stories!');
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'add_blog',
+        data: blogData
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handlePaymentToggle = (key) => {
-    onUpdatePaymentConfig({
+  const handlePaymentToggle = async (key) => {
+    const updatedConfig = {
       ...paymentConfig,
       [key]: !paymentConfig[key],
-    });
+    };
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onUpdatePaymentConfig(updatedConfig);
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'update_payment',
+        data: updatedConfig
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleUpiIdChange = (e) => {
-    onUpdatePaymentConfig({
+  const handleUpiIdChange = async (e) => {
+    const updatedConfig = {
       ...paymentConfig,
       upiId: e.target.value,
-    });
+    };
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onUpdatePaymentConfig(updatedConfig);
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'update_payment',
+        data: updatedConfig
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleRazorpayChange = (key, val) => {
-    onUpdatePaymentConfig({
+  const handleRazorpayChange = async (key, val) => {
+    const updatedConfig = {
       ...paymentConfig,
       [key]: val,
-    });
+    };
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onUpdatePaymentConfig(updatedConfig);
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'update_payment',
+        data: updatedConfig
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteProductClick = async (id) => {
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onDeleteProduct(id);
+      alert('Product deleted successfully!');
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'delete_product',
+        data: { id }
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleToggleCouponClick = async (code) => {
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onToggleCoupon(code);
+      alert('Coupon status updated successfully!');
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'toggle_coupon',
+        data: { code }
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteBlogClick = async (id) => {
+    setIsSubmitting(true);
+    setDbError(null);
+    try {
+      await onDeleteBlog(id);
+      alert('Story deleted successfully!');
+    } catch (err) {
+      console.error(err);
+      setDbError({
+        error: err,
+        type: 'delete_blog',
+        data: { id }
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSaveLocally = async () => {
+    if (!dbError) return;
+    setIsSubmitting(true);
+    try {
+      if (dbError.type === 'update_product') {
+        await onUpdateProduct(dbError.data, true);
+        setEditingProduct(null);
+        alert('Product details updated locally!');
+      } else if (dbError.type === 'add_product') {
+        await onAddProduct(dbError.data, true);
+        setNewProduct({
+          name: '',
+          bengaliName: '',
+          price: '',
+          weight: '',
+          story: '',
+          description: '',
+          ingredientsInput: '',
+          image: '/images/panch-phoron.png',
+          imageSelect: '/images/panch-phoron.png',
+          backImage: '',
+        });
+        alert('Spice SKU added locally!');
+      } else if (dbError.type === 'add_coupon') {
+        await onAddCoupon(dbError.data, true);
+        setNewCoupon({ code: '', type: 'percentage', value: '' });
+        alert('Coupon added locally!');
+      } else if (dbError.type === 'toggle_coupon') {
+        await onToggleCoupon(dbError.data.code, true);
+        alert('Coupon toggled locally!');
+      } else if (dbError.type === 'delete_product') {
+        await onDeleteProduct(dbError.data.id, true);
+        alert('Product deleted locally!');
+      } else if (dbError.type === 'add_blog') {
+        await onAddBlog(dbError.data, true);
+        setNewBlog({ title: '', titleBn: '', author: '', pillar: 'Memory', content: '', readTime: '3 min read' });
+        alert('Story published locally!');
+      } else if (dbError.type === 'delete_blog') {
+        await onDeleteBlog(dbError.data.id, true);
+        alert('Story deleted locally!');
+      } else if (dbError.type === 'update_payment') {
+        await onUpdatePaymentConfig(dbError.data, true);
+        alert('Payment settings updated locally!');
+      }
+      setDbError(null);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to save locally: ' + err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -506,9 +712,10 @@ export default function AdminDashboard({
                                 <div className="wp-row-actions">
                                   <button
                                     className="wp-action-link wp-action-link--danger"
-                                    onClick={() => onDeleteProduct(prod.id)}
+                                    onClick={() => handleDeleteProductClick(prod.id)}
+                                    disabled={isSubmitting}
                                   >
-                                    Delete
+                                    {isSubmitting ? 'Deleting...' : 'Delete'}
                                   </button>
                                   <span className="divider">|</span>
                                   <button
@@ -676,7 +883,9 @@ export default function AdminDashboard({
                           </label>
                         </div>
                       </div>
-                      <button type="submit" className="wp-btn wp-btn--primary">Publish Pouch</button>
+                      <button type="submit" className="wp-btn wp-btn--primary" disabled={isSubmitting}>
+                        {isSubmitting ? 'Publishing...' : 'Publish Pouch'}
+                      </button>
                     </form>
                   </div>
                 </div>
@@ -715,7 +924,8 @@ export default function AdminDashboard({
                                 <div className="wp-row-actions">
                                   <button
                                     className={`wp-action-link ${coupon.active ? 'wp-action-link--danger' : 'wp-action-link--success'}`}
-                                    onClick={() => onToggleCoupon(coupon.code)}
+                                    onClick={() => handleToggleCouponClick(coupon.code)}
+                                    disabled={isSubmitting}
                                   >
                                     {coupon.active ? 'Deactivate' : 'Activate'}
                                   </button>
@@ -814,9 +1024,10 @@ export default function AdminDashboard({
                                 <div className="wp-row-actions">
                                   <button
                                     className="wp-action-link wp-action-link--danger"
-                                    onClick={() => onDeleteBlog(blog.id)}
+                                    onClick={() => handleDeleteBlogClick(blog.id)}
+                                    disabled={isSubmitting}
                                   >
-                                    Delete
+                                    {isSubmitting ? 'Deleting...' : 'Delete'}
                                   </button>
                                   <span className="divider">|</span>
                                   <button
@@ -1035,11 +1246,24 @@ export default function AdminDashboard({
               <h3>Edit Product: {editingProduct.name}</h3>
               <button className="wp-modal__close" onClick={() => setEditingProduct(null)}>×</button>
             </div>
-            <form onSubmit={(e) => {
+            <form onSubmit={async (e) => {
               e.preventDefault();
-              onUpdateProduct(editingProduct);
-              setEditingProduct(null);
-              alert('Product details updated successfully!');
+              setIsSubmitting(true);
+              setDbError(null);
+              try {
+                await onUpdateProduct(editingProduct);
+                setEditingProduct(null);
+                alert('Product details updated successfully!');
+              } catch (err) {
+                console.error(err);
+                setDbError({
+                  error: err,
+                  type: 'update_product',
+                  data: editingProduct
+                });
+              } finally {
+                setIsSubmitting(false);
+              }
             }} className="wp-form">
               <div className="wp-modal__body">
                 
@@ -1194,9 +1418,98 @@ export default function AdminDashboard({
                     Remove Back Image
                   </button>
                 )}
-                <button type="submit" className="wp-btn wp-btn--primary">Save Changes</button>
+                <button type="submit" className="wp-btn wp-btn--primary" disabled={isSubmitting}>
+                  {isSubmitting ? 'Saving...' : 'Save Changes'}
+                </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── Database Schema Error Helper Modal ── */}
+      {dbError && (
+        <div className="wp-modal-overlay" style={{ zIndex: 10000 }}>
+          <div className="wp-modal wp-modal--error" style={{ maxWidth: '650px' }}>
+            <div className="wp-modal__header" style={{ borderBottom: '1px solid rgba(196, 98, 58, 0.15)', background: 'rgba(196, 98, 58, 0.05)', padding: '15px' }}>
+              <h3 style={{ color: 'var(--spice-sienna)', margin: 0 }}>⚠️ Database Schema Sync Required</h3>
+              <button className="wp-modal__close" onClick={() => setDbError(null)}>×</button>
+            </div>
+            <div className="wp-modal__body" style={{ maxHeight: '70vh', overflowY: 'auto', padding: '15px' }}>
+              <div style={{ background: '#FFF6F2', borderLeft: '4px solid var(--spice-sienna)', padding: '12px', marginBottom: '16px', borderRadius: '4px' }}>
+                <p style={{ margin: 0, fontSize: '0.85rem', color: '#8b4e2f' }}>
+                  <strong>Action failed:</strong> The database rejected the save request, likely because your Supabase tables are missing columns or your storage bucket isn't set up.
+                </p>
+                <p style={{ margin: '4px 0 0 0', fontSize: '0.8rem', color: 'rgba(26, 26, 26, 0.7)', fontFamily: 'monospace' }}>
+                  Error details: {dbError.error?.message || JSON.stringify(dbError.error)}
+                </p>
+              </div>
+
+              <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9rem' }}>How to fix this:</h4>
+              <ol style={{ paddingLeft: '20px', margin: '0 0 16px 0', fontSize: '0.85rem', lineHeight: '1.4' }}>
+                <li>Log in to your <strong>Supabase Dashboard</strong>.</li>
+                <li>Go to the <strong>SQL Editor</strong>, open a new query, paste the SQL script below, and click <strong>Run</strong>.</li>
+                <li>Go to <strong>Storage</strong>, create a new public bucket named <code>product-images</code>, or run the SQL bucket setup.</li>
+              </ol>
+
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', right: '10px', top: '10px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', background: 'rgba(0,0,0,0.3)', padding: '2px 6px', borderRadius: '3px' }}>SQL DDL</span>
+                <pre style={{ background: '#1e1e1e', color: '#d4d4d4', padding: '12px', borderRadius: '4px', overflowX: 'auto', fontSize: '0.8rem', fontFamily: 'monospace', maxHeight: '180px', margin: '0 0 12px 0', whiteSpace: 'pre-wrap' }}>
+{`-- 1. Create storage bucket for product images if missing
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('product-images', 'product-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- 2. Add missing columns to 'products' table
+ALTER TABLE products ADD COLUMN IF NOT EXISTS back_image TEXT;
+
+-- 3. Add missing columns to 'payment_config' table
+ALTER TABLE payment_config ADD COLUMN IF NOT EXISTS razorpay_enabled BOOLEAN DEFAULT FALSE;
+ALTER TABLE payment_config ADD COLUMN IF NOT EXISTS razorpay_key_id TEXT;
+ALTER TABLE payment_config ADD COLUMN IF NOT EXISTS razorpay_key_secret TEXT;`}
+                </pre>
+                <button
+                  type="button"
+                  className="wp-btn"
+                  style={{ fontSize: '0.8rem', padding: '6px 12px', background: 'var(--forest-olive)', color: '#fff', border: 'none', cursor: 'pointer' }}
+                  onClick={() => {
+                    navigator.clipboard.writeText(`-- 1. Create storage bucket for product images if missing
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('product-images', 'product-images', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- 2. Add missing columns to 'products' table
+ALTER TABLE products ADD COLUMN IF NOT EXISTS back_image TEXT;
+
+-- 3. Add missing columns to 'payment_config' table
+ALTER TABLE payment_config ADD COLUMN IF NOT EXISTS razorpay_enabled BOOLEAN DEFAULT FALSE;
+ALTER TABLE payment_config ADD COLUMN IF NOT EXISTS razorpay_key_id TEXT;
+ALTER TABLE payment_config ADD COLUMN IF NOT EXISTS razorpay_key_secret TEXT;`);
+                    alert('SQL script copied to clipboard!');
+                  }}
+                >
+                  📋 Copy SQL Script
+                </button>
+              </div>
+
+              <div style={{ marginTop: '20px', borderTop: '1px dashed #ccc', paddingTop: '16px' }}>
+                <h4 style={{ margin: '0 0 6px 0', fontSize: '0.9rem', color: 'var(--forest-olive)' }}>💡 Need a temporary workaround?</h4>
+                <p style={{ margin: '0 0 10px 0', fontSize: '0.8rem', color: 'rgba(26, 26, 26, 0.7)' }}>
+                  You can bypass Supabase database writes and save these changes locally to your browser's <code>localStorage</code>. They will be visible in this browser session immediately, but won't be saved on the server.
+                </p>
+              </div>
+            </div>
+            <div className="wp-modal__actions" style={{ background: '#FAF6EE', borderTop: '1px solid rgba(0,0,0,0.05)', padding: '15px' }}>
+              <button type="button" className="wp-btn" onClick={() => setDbError(null)}>Dismiss</button>
+              <button
+                type="button"
+                className="wp-btn wp-btn--primary"
+                style={{ background: 'var(--forest-olive)' }}
+                onClick={handleSaveLocally}
+              >
+                Save Locally (Temporary)
+              </button>
+            </div>
           </div>
         </div>
       )}
