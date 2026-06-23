@@ -1,0 +1,269 @@
+/* ============================================
+   Footer.css — Premium Footer
+   ============================================ */
+
+/* --- Botanical Border --- */
+.footer-botanical-border {
+  width: 100%;
+  height: 40px;
+  background: #5C6B3A;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-botanical-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40 C50 20 100 30 150 25 C200 20 250 10 300 15 C350 20 400 30 450 25 C500 20 550 8 600 12 C650 16 700 28 750 22 C800 16 850 8 900 14 C950 20 1000 28 1050 24 C1100 20 1150 12 1200 18 L1200 0 L0 0 Z' fill='%23FAF6EE'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.footer-botanical-border::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 100%;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 20 Q30 5 60 15 T120 12 T180 18 T240 10 T300 16 T360 8 T420 14 T480 10 T540 16 T600 8 T660 14 T720 10 T780 16 T840 8 T900 14 T960 10 T1020 16 T1080 8 T1140 14 T1200 10' fill='none' stroke='%23FAF6EE' stroke-width='0.8' opacity='0.3'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Decorative vine-like elements */
+.footer-vine-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cpath d='M10 35 C20 25 30 30 35 20 C40 10 50 15 55 10' fill='none' stroke='%234a5730' stroke-width='0.8' opacity='0.4'/%3E%3Ccircle cx='55' cy='10' r='2' fill='%234a5730' opacity='0.3'/%3E%3Cpath d='M30 22 C25 18 28 12 32 10' fill='none' stroke='%234a5730' stroke-width='0.6' opacity='0.3'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 120px 40px;
+  background-position: center;
+}
+
+/* --- Footer Main --- */
+.site-footer {
+  background-color: #5C6B3A;
+  color: #FAF6EE;
+  position: relative;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 32px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr 1.4fr;
+  gap: 48px;
+}
+
+/* --- Column Titles --- */
+.footer-col-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #FAF6EE;
+  margin: 0 0 24px 0;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.footer-col-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: #C4623A;
+}
+
+/* --- Quick Links --- */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-link {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  color: rgba(250, 246, 238, 0.75);
+  background: none;
+  border: none;
+  padding: 4px 0;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #C4623A;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer-link:hover {
+  color: #FAF6EE;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* --- Contact --- */
+.footer-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-contact-item {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-contact-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.footer-contact-text {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  color: rgba(250, 246, 238, 0.75);
+}
+
+.footer-contact-text a {
+  color: rgba(250, 246, 238, 0.75);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact-text a:hover {
+  color: #FAF6EE;
+}
+
+/* --- Mission --- */
+.footer-mission-text {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: rgba(250, 246, 238, 0.7);
+}
+
+.footer-mission-bengali {
+  font-family: 'Noto Sans Bengali', sans-serif;
+  font-size: 0.85rem;
+  color: #C4623A;
+  margin-top: 16px;
+  display: block;
+  opacity: 0.8;
+}
+
+/* --- Bottom Bar --- */
+.footer-bottom {
+  border-top: 1px solid rgba(250, 246, 238, 0.1);
+  padding: 24px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-copyright {
+  font-family: 'Lora', serif;
+  font-size: 0.85rem;
+  color: rgba(250, 246, 238, 0.5);
+}
+
+.footer-copyright .footer-bengali-name {
+  font-family: 'Noto Sans Bengali', sans-serif;
+}
+
+.footer-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(250, 246, 238, 0.4);
+  letter-spacing: 0.5px;
+}
+
+/* --- Decorative leaf in footer --- */
+.footer-decorative-leaf {
+  position: absolute;
+  bottom: 80px;
+  right: 40px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.footer-decorative-leaf svg {
+  width: 120px;
+  height: 180px;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 48px 24px 32px;
+  }
+
+  .footer-col-title::after {
+    left: 0;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 24px;
+    gap: 8px;
+  }
+
+  .footer-decorative-leaf {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content {
+    padding: 36px 20px 24px;
+    gap: 28px;
+  }
+
+  .footer-bottom {
+    padding: 16px 20px;
+  }
+}

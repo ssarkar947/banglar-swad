@@ -1,0 +1,589 @@
+/* ============================================
+   SundayKitchen.css — Interactive Content Hub
+   ============================================ */
+
+/* --- Scroll Reveal --- */
+.sk-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sk-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================
+   Container
+   ========================================= */
+.sunday-kitchen {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #FAF6EE;
+}
+
+/* =========================================
+   Header
+   ========================================= */
+.sk-header {
+  background: linear-gradient(165deg, #FAF6EE 0%, #F5EDD8 40%, #FAF6EE 100%);
+  padding: 80px 24px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sk-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #8B4E2F33, #8B4E2F55, #8B4E2F33, transparent);
+}
+
+.sk-header-bengali {
+  font-family: 'Noto Sans Bengali', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: #5C6B3A;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.sk-header-english {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 400;
+  color: #8B4E2F;
+  margin: 8px 0 0;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+.sk-header-tagline {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  color: #1A1A1A;
+  opacity: 0.6;
+  margin-top: 12px;
+}
+
+/* =========================================
+   Tab Navigation
+   ========================================= */
+.sk-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px 24px 24px;
+  flex-wrap: wrap;
+}
+
+.sk-tab {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: 1.5px solid #5C6B3A44;
+  background: transparent;
+  color: #5C6B3A;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sk-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #5C6B3A;
+  border-radius: 50px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+
+.sk-tab:hover {
+  border-color: #5C6B3A;
+  color: #5C6B3A;
+}
+
+.sk-tab.active {
+  border-color: #5C6B3A;
+  color: #FAF6EE;
+}
+
+.sk-tab.active::before {
+  transform: scaleX(1);
+}
+
+.sk-tab-label {
+  position: relative;
+  z-index: 1;
+}
+
+.sk-tab-bengali {
+  font-family: 'Noto Sans Bengali', sans-serif;
+  font-size: 0.85rem;
+  margin-left: 6px;
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   Tab Content Area
+   ========================================= */
+.sk-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+/* Tab Panel Animation */
+.sk-panel {
+  animation: skPanelFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes skPanelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   Tab 1: Ma Bolechen — Handwritten Cards
+   ========================================= */
+.ma-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+  padding: 16px 0;
+}
+
+.ma-card {
+  background: #F5EDD8;
+  border-radius: 4px;
+  padding: 32px 28px;
+  position: relative;
+  box-shadow: 
+    0 2px 8px rgba(139, 78, 47, 0.08),
+    0 8px 24px rgba(139, 78, 47, 0.04);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease;
+  cursor: default;
+  animation: maCardFloat 6s ease-in-out infinite;
+}
+
+/* Slight rotation variations */
+.ma-card:nth-child(1) { transform: rotate(-1.2deg); animation-delay: 0s; }
+.ma-card:nth-child(2) { transform: rotate(0.8deg); animation-delay: 0.8s; }
+.ma-card:nth-child(3) { transform: rotate(-0.5deg); animation-delay: 1.6s; }
+.ma-card:nth-child(4) { transform: rotate(1deg); animation-delay: 0.4s; }
+.ma-card:nth-child(5) { transform: rotate(-0.7deg); animation-delay: 1.2s; }
+.ma-card:nth-child(6) { transform: rotate(0.6deg); animation-delay: 2s; }
+
+@keyframes maCardFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--rotation, -1deg)); }
+  50% { transform: translateY(-4px) rotate(var(--rotation, -1deg)); }
+}
+
+.ma-card:nth-child(1) { --rotation: -1.2deg; }
+.ma-card:nth-child(2) { --rotation: 0.8deg; }
+.ma-card:nth-child(3) { --rotation: -0.5deg; }
+.ma-card:nth-child(4) { --rotation: 1deg; }
+.ma-card:nth-child(5) { --rotation: -0.7deg; }
+.ma-card:nth-child(6) { --rotation: 0.6deg; }
+
+.ma-card:hover {
+  transform: translateY(-8px) rotate(0deg) !important;
+  box-shadow: 
+    0 12px 32px rgba(139, 78, 47, 0.12),
+    0 4px 12px rgba(139, 78, 47, 0.08);
+  animation-play-state: paused;
+}
+
+/* Paper texture effect via pseudo-element */
+.ma-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Tape effect on top */
+.ma-card::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 14px;
+  background: rgba(196, 98, 58, 0.15);
+  border-radius: 2px;
+}
+
+.ma-card-prefix {
+  font-family: 'Noto Sans Bengali', sans-serif;
+  font-size: 0.8rem;
+  color: #C4623A;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  display: block;
+  font-weight: 600;
+}
+
+.ma-card-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: #1A1A1A;
+}
+
+.ma-card-accent {
+  display: block;
+  margin-top: 16px;
+  font-family: 'Noto Sans Bengali', sans-serif;
+  font-size: 0.75rem;
+  color: #8B4E2F;
+  opacity: 0.5;
+}
+
+/* =========================================
+   Tab 2: The Sunday Series
+   ========================================= */
+.sunday-series {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.sunday-immersive-card {
+  background: linear-gradient(135deg, #F5EDD8 0%, #FAF6EE 100%);
+  border-radius: 12px;
+  padding: 56px 44px;
+  margin-bottom: 32px;
+  position: relative;
+  border: 1px solid rgba(139, 78, 47, 0.1);
+}
+
+.sunday-immersive-card .sunday-card-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-style: italic;
+  line-height: 1.9;
+  color: #8B4E2F;
+}
+
+.sunday-scene-card {
+  background: #FAF6EE;
+  border-left: 3px solid #8B4E2F;
+  padding: 32px 36px;
+  margin-bottom: 20px;
+  border-radius: 0 8px 8px 0;
+  transition: transform 0.3s ease;
+}
+
+.sunday-scene-card:hover {
+  transform: translateX(4px);
+}
+
+.sunday-scene-card .sunday-card-text {
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.85;
+  color: #1A1A1A;
+}
+
+/* Steam Animation */
+.sunday-kadai-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 48px 0 32px;
+  position: relative;
+}
+
+.sunday-steam {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+  height: 50px;
+  align-items: flex-end;
+}
+
+.steam-line {
+  width: 2px;
+  background: linear-gradient(to top, #8B4E2F44, transparent);
+  border-radius: 2px;
+  animation: steamRise 2.5s ease-in-out infinite;
+}
+
+.steam-line:nth-child(1) {
+  height: 28px;
+  animation-delay: 0s;
+}
+
+.steam-line:nth-child(2) {
+  height: 36px;
+  animation-delay: 0.5s;
+}
+
+.steam-line:nth-child(3) {
+  height: 24px;
+  animation-delay: 1s;
+}
+
+.steam-line:nth-child(4) {
+  height: 32px;
+  animation-delay: 0.3s;
+}
+
+.steam-line:nth-child(5) {
+  height: 20px;
+  animation-delay: 0.8s;
+}
+
+@keyframes steamRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scaleY(0.5);
+  }
+  30% {
+    opacity: 0.6;
+    transform: translateY(-8px) scaleY(1);
+  }
+  60% {
+    opacity: 0.3;
+    transform: translateY(-20px) scaleY(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-35px) scaleY(0.6);
+  }
+}
+
+/* Kadai illustration (CSS-drawn) */
+.sunday-kadai {
+  position: relative;
+  width: 80px;
+  height: 36px;
+}
+
+.kadai-body {
+  width: 80px;
+  height: 32px;
+  background: linear-gradient(180deg, #8B4E2F 0%, #6d3a22 100%);
+  border-radius: 0 0 40px 40px;
+  position: relative;
+}
+
+.kadai-rim {
+  width: 90px;
+  height: 6px;
+  background: linear-gradient(180deg, #a0603a, #8B4E2F);
+  border-radius: 3px;
+  position: absolute;
+  top: -3px;
+  left: -5px;
+}
+
+.kadai-handle-left,
+.kadai-handle-right {
+  width: 14px;
+  height: 8px;
+  border: 2px solid #8B4E2F;
+  border-radius: 0 0 6px 6px;
+  border-top: none;
+  position: absolute;
+  top: 2px;
+}
+
+.kadai-handle-left {
+  left: -16px;
+}
+
+.kadai-handle-right {
+  right: -16px;
+}
+
+.sunday-kadai-label {
+  font-family: 'Noto Sans Bengali', sans-serif;
+  font-size: 0.75rem;
+  color: #8B4E2F;
+  opacity: 0.5;
+  margin-top: 12px;
+}
+
+/* =========================================
+   Tab 3: Janle Bhalo Hoy — Knowledge Cards
+   ========================================= */
+.knowledge-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.knowledge-card {
+  display: flex;
+  background: #FAF6EE;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(92, 107, 58, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.knowledge-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(92, 107, 58, 0.1);
+}
+
+.knowledge-accent {
+  width: 5px;
+  min-height: 100%;
+  background: #5C6B3A;
+  flex-shrink: 0;
+}
+
+.knowledge-body {
+  padding: 28px 32px;
+  flex: 1;
+}
+
+.knowledge-badge {
+  display: inline-block;
+  font-family: 'Lora', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #C4623A;
+  background: rgba(196, 98, 58, 0.08);
+  padding: 4px 12px;
+  border-radius: 3px;
+  margin-bottom: 14px;
+}
+
+.knowledge-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #5C6B3A;
+  margin: 0 0 12px 0;
+}
+
+.knowledge-text {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.knowledge-bengali-note {
+  font-family: 'Noto Sans Bengali', sans-serif;
+  font-size: 0.8rem;
+  color: #8B4E2F;
+  opacity: 0.6;
+  margin-top: 12px;
+  display: block;
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+@media (max-width: 768px) {
+  .sk-header {
+    padding: 60px 20px 32px;
+  }
+
+  .sk-tabs {
+    padding: 20px 16px 16px;
+    gap: 6px;
+  }
+
+  .sk-tab {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .sk-tab-bengali {
+    display: block;
+    font-size: 0.65rem;
+    margin-left: 0;
+    opacity: 0.7;
+  }
+
+  .sk-content {
+    padding: 16px 16px 60px;
+  }
+
+  .ma-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ma-card {
+    transform: rotate(0deg) !important;
+  }
+
+  .sunday-immersive-card {
+    padding: 36px 24px;
+  }
+
+  .sunday-scene-card {
+    padding: 24px 20px;
+  }
+
+  .knowledge-body {
+    padding: 20px 20px;
+  }
+
+  .knowledge-title {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sk-header-bengali {
+    font-size: 1.8rem;
+  }
+
+  .ma-card {
+    padding: 24px 20px;
+  }
+
+  .ma-card-text {
+    font-size: 1.05rem;
+  }
+}

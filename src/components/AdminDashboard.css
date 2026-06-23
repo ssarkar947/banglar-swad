@@ -1,0 +1,684 @@
+/* ── WordPress-style Admin Panels ── */
+
+.wp-admin {
+  background-color: #f1f1f1; /* Light WP Dashboard gray, desaturated slightly */
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  color: #32373c;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top Bar ── */
+.wp-admin__bar {
+  background: #23282d; /* WP dark bar */
+  color: #c3c4c7;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  font-size: 13px;
+  z-index: 9999;
+}
+
+.wp-admin__bar-left {
+  display: flex;
+  align-items: center;
+}
+
+.wp-admin__bar-site {
+  color: #f0f0f1;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.wp-admin__bar-site:hover {
+  color: #72aee6; /* WP blue link */
+}
+
+.wp-admin__bar-site-sub {
+  font-weight: normal;
+  color: #a7aaad;
+  margin-left: 6px;
+}
+
+.wp-admin__bar-right {
+  display: flex;
+  align-items: center;
+}
+
+.wp-admin__bar-user {
+  cursor: pointer;
+}
+
+.wp-admin__bar-user:hover {
+  color: #72aee6;
+}
+
+/* ── Container Layout ── */
+.wp-admin__container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  flex-grow: 1;
+  min-height: calc(100vh - 32px);
+}
+
+/* ── Sidebar ── */
+.wp-admin__sidebar {
+  background: #23282d; /* WP sidebar */
+  padding-top: 10px;
+}
+
+.wp-admin__nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.wp-admin__nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  color: #c3c4c7;
+  padding: 12px 18px;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+
+.wp-admin__nav-btn:hover {
+  background: #191e23;
+  color: #72aee6;
+}
+
+.wp-admin__nav-btn--active {
+  background: #191e23;
+  color: #fff !important;
+  border-left: 4px solid #c4623a; /* Sienna brand stripe instead of WP blue */
+  padding-left: 14px;
+}
+
+.wp-admin__nav-icon {
+  font-size: 16px;
+}
+
+.wp-admin__nav-label {
+  font-weight: 500;
+}
+
+/* ── Main Area ── */
+.wp-admin__main {
+  padding: 30px 40px;
+  min-width: 0;
+}
+
+.wp-admin__title {
+  font-size: 23px;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+  color: #23282d;
+}
+
+/* ── Dashboard Grid ── */
+.wp-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.wp-grid--dashboard {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ── WP Widgets / Boxes ── */
+.wp-widget {
+  background: #fff;
+  border: 1px solid #ccd0d4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.wp-widget__header {
+  border-bottom: 1px solid #eee;
+  padding: 12px 15px;
+}
+
+.wp-widget__header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #23282d;
+}
+
+.wp-widget__body {
+  padding: 15px;
+}
+
+/* ── At a Glance Widget ── */
+.glance-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+
+.glance-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #32373c;
+}
+
+.glance-icon {
+  font-size: 18px;
+}
+
+.glance-footer {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+  font-size: 13px;
+  color: #646970;
+}
+
+.glance-footer p {
+  margin: 0 0 6px 0;
+}
+
+/* ── Forms ── */
+.wp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wp-form--draft {
+  gap: 12px;
+}
+
+.wp-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wp-form__field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #23282d;
+}
+
+.wp-form input,
+.wp-form select,
+.wp-form textarea {
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #2c3338;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.wp-form input:focus,
+.wp-form select:focus,
+.wp-form textarea:focus {
+  outline: none;
+  border-color: #c4623a; /* Sienna brand focus */
+  box-shadow: 0 0 0 2px rgba(196, 98, 58, 0.15);
+}
+
+.wp-form__field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── Buttons ── */
+.wp-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.wp-btn--primary {
+  background: #c4623a; /* Sienna brand primary button */
+  color: #fff;
+  border-color: #b3522b;
+}
+
+.wp-btn--primary:hover {
+  background: #b3522b;
+  border-color: #8b3c1a;
+}
+
+/* ── Tables ── */
+.wp-table-wrapper {
+  overflow-x: auto;
+}
+
+.wp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+  border: 1px solid #ccd0d4;
+}
+
+.wp-table th {
+  background: #f6f7f7;
+  color: #2c3338;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-bottom: 1px solid #ccd0d4;
+  border-right: 1px solid #ccd0d4;
+}
+
+.wp-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f1;
+  border-right: 1px solid #ccd0d4;
+  background: #fff;
+  vertical-align: top;
+  position: relative;
+}
+
+.wp-table tr:hover td {
+  background: #fafafa;
+}
+
+.wp-table-row {
+  position: relative;
+}
+
+/* ── WordPress Row Actions on Hover ── */
+.wp-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  font-size: 11px;
+}
+
+.wp-table-row:hover .wp-row-actions {
+  opacity: 1; /* Revealed on row hover! */
+}
+
+.wp-action-link {
+  background: transparent;
+  border: none;
+  color: #2271b1;
+  padding: 0;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.wp-action-link:hover {
+  color: #135e96;
+}
+
+.wp-action-link--danger {
+  color: #b32d2e;
+}
+
+.wp-action-link--danger:hover {
+  color: #902425;
+}
+
+.wp-action-link--success {
+  color: #007cba;
+}
+
+.wp-action-link--success:hover {
+  color: #006090;
+}
+
+.wp-table .divider {
+  color: #ddd;
+}
+
+/* ── Badges ── */
+.wp-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.wp-status--pending {
+  background: #fcf0e1;
+  color: #d68000;
+  border: 1px solid #e1b47d;
+}
+
+.wp-status--shipped {
+  background: #eef7ed;
+  color: #2b7a2d;
+  border: 1px solid #c2e1c0;
+}
+
+.wp-status--delivered {
+  background: #eef7ed;
+  color: #2b7a2d;
+  border: 1px solid #2b7a2d;
+  font-weight: bold;
+}
+
+.wp-status--cancelled {
+  background: #f4f4f4;
+  color: #777;
+  border: 1px solid #ddd;
+  text-decoration: line-through;
+}
+
+/* ── Columns & Helpers ── */
+.wp-two-col {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 25px;
+  align-items: start;
+}
+
+.wp-order-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wp-product-thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border: 1px solid #ccd0d4;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.wp-empty-text {
+  text-align: center;
+  color: #646970;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* ── Gateways Switches ── */
+.wp-gateways {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.wp-gateway-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px dashed #ccd0d4;
+}
+
+.wp-gateway-row:last-child {
+  border-bottom: none;
+}
+
+.wp-gateway-config-box {
+  padding-left: 15px;
+  border-left: 3px solid #c4623a;
+  margin-bottom: 15px;
+}
+
+.wp-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.wp-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wp-switch__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccd0d4;
+  transition: 0.3s;
+  border-radius: 22px;
+}
+
+.wp-switch__slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  transition: 0.3s;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.wp-switch input:checked + .wp-switch__slider {
+  background-color: #c4623a; /* Sienna brand green/sienna */
+}
+
+.wp-switch input:checked + .wp-switch__slider:before {
+  transform: translateX(18px);
+}
+
+/* Utility Helpers */
+.d-block { display: block; }
+.font-mono { font-family: monospace; }
+.font-bold { font-weight: bold; }
+.text-xs { font-size: 11px; }
+.text-sienna { color: #c4623a; }
+.text-muted { color: #646970; }
+
+/* ── Mobile responsiveness ── */
+@media (max-width: 782px) {
+  .wp-admin__container {
+    grid-template-columns: 1fr;
+  }
+  
+  .wp-admin__sidebar {
+    border-bottom: 1px solid #ccd0d4;
+    padding: 10px 15px;
+  }
+  
+  .wp-admin__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .wp-admin__nav-btn {
+    width: auto;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .wp-admin__nav-btn--active {
+    border-left: none;
+    border-bottom: 3px solid #c4623a;
+    padding-left: 12px;
+  }
+  
+  .wp-admin__main {
+    padding: 20px 15px;
+  }
+  
+  .wp-grid--dashboard {
+    grid-template-columns: 1fr;
+  }
+  
+  .wp-widget--activity {
+    grid-column: span 1 !important;
+  }
+  
+  .wp-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── WordPress Admin Modal Overlay ── */
+.wp-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+  backdrop-filter: blur(3px);
+}
+
+.wp-modal {
+  background: #FAF6EE;
+  border: 1px solid #ccd0d4;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 550px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  animation: scaleIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+
+.wp-modal__header {
+  background: #23282d;
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wp-modal__header h3 {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.wp-modal__close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.wp-modal__close:hover {
+  color: #fff;
+}
+
+.wp-modal form {
+  padding: 20px;
+}
+
+.wp-modal__preview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 20px 0;
+  background: #f6f7f7;
+  padding: 15px;
+  border: 1px solid #ccd0d4;
+  border-radius: 4px;
+}
+
+.wp-modal__preview-grid strong {
+  display: block;
+  font-size: 12px;
+  color: #2c3338;
+  margin-bottom: 8px;
+}
+
+.wp-modal__preview-img {
+  max-width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+  border: 1px solid #ccd0d4;
+  border-radius: 4px;
+  background: #fff;
+  padding: 8px;
+}
+
+.wp-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #ccd0d4;
+  padding: 15px 20px;
+  background: #f6f7f7;
+}
+
+.wp-modal__body {
+  max-height: 65vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* ── Inline Uploader Inputs ── */
+.wp-upload-input-group {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.wp-upload-input-group input {
+  flex-grow: 1;
+}
+
+.wp-upload-btn {
+  background: #f6f7f7;
+  border: 1px solid #8c8f94;
+  border-radius: 3px;
+  color: #2c3338;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 2.15384615; /* Matching standard WP inputs */
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-block;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.wp-upload-btn:hover {
+  background: #f0f0f1;
+  border-color: #0a4b78;
+  color: #0a4b78;
+}

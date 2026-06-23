@@ -1,0 +1,193 @@
+/* ═══════════════════════════════════════════════════════
+   index.css — Banglar Swad Global Reset & Base Styles
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ── Brand Palette ─────────────────────────────── */
+  --forest-olive: #5C6B3A;
+  --spice-sienna: #C4623A;
+  --old-paper: #F5EDD8;
+  --clay-brown: #8B4E2F;
+  --ink-black: #1A1A1A;
+  --warm-cream: #FAF6EE;
+
+  /* ── Derived Colors ────────────────────────────── */
+  --olive-trans: rgba(92, 107, 58, 0.1);
+  --sienna-trans: rgba(196, 98, 58, 0.1);
+  --clay-trans: rgba(139, 78, 47, 0.1);
+  --border-color: rgba(92, 107, 58, 0.15);
+
+  /* ── Typography ────────────────────────────────── */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Lora', serif;
+  --font-bengali: 'Noto Sans Bengali', sans-serif;
+
+  /* ── Spacing Scale ─────────────────────────────── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ── Border Radius ─────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ───────────────────────────────────── */
+  --shadow-sm: 0 1px 3px rgba(26, 26, 26, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(92, 107, 58, 0.08), 0 2px 4px -1px rgba(139, 78, 47, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(92, 107, 58, 0.1), 0 4px 6px -2px rgba(139, 78, 47, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(26, 26, 26, 0.12), 0 10px 10px -5px rgba(26, 26, 26, 0.04);
+
+  /* ── Transitions ───────────────────────────────── */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-black);
+  background: var(--warm-cream);
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;
+  text-align: left;
+  min-height: 100dvh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  outline: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--spice-sienna);
+  color: var(--warm-cream);
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warm-cream);
+  border-left: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--forest-olive);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--warm-cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--spice-sienna);
+}
+
+/* ── Global Keyframe Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animation classes */
+.fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.slideUp {
+  animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scaleIn {
+  animation: scaleIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
